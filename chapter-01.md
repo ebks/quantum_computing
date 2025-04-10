@@ -1,7 +1,7 @@
 ----
 # Capítulo 1
 
-# Fundamentos da Mecânica Quântica**
+# Fundamentos da Mecânica Quântica
 ----
 
 Este capítulo inaugural serve como alicerce essencial para toda a jornada no fascinante domínio da computação e informação quântica. Antes de podermos sequer conceber como processar informação utilizando as leis da natureza na sua escala mais fundamental, é imperativo adquirir uma compreensão sólida dessas próprias leis. A mecânica quântica, a teoria que descreve o comportamento da matéria e da energia nos níveis atômico e subatômico, opera sob regras radicalmente diferentes daquelas da física clássica que governam nossa experiência cotidiana. Este capítulo tem como objetivo principal desmistificar esses princípios fundamentais, fornecendo o arcabouço conceitual e matemático necessário para os tópicos subsequentes. Começaremos revisitando brevemente as origens históricas da teoria quântica (Seção 1.1), explorando os fenômenos experimentais – como a radiação de corpo negro e o efeito fotoelétrico – que desafiaram as explicações clássicas e forçaram a introdução revolucionária da quantização. Em seguida, mergulharemos no formalismo matemático que sustenta a teoria (Seção 1.2), introduzindo a noção de Espaços de Hilbert complexos como a arena onde os estados quânticos residem, juntamente com a poderosa e elegante notação Bra-Ket de Dirac para manipular vetores e operadores. Com a matemática estabelecida, definiremos o conceito central de estado quântico e exploraremos o princípio da superposição (Seção 1.3), uma característica distintamente quântica que permite aos sistemas existir em múltiplas configurações simultaneamente, abordando também a importância da normalização e das fases. Posteriormente, introduziremos os operadores lineares como representantes das transformações e, crucialmente, os operadores Hermitianos como contrapartes matemáticas das quantidades físicas observáveis (Seção 1.4), discutindo seus autovalores e autovetores. O processo de medição, intrinsecamente probabilístico e disruptivo na mecânica quântica, será detalhado na Seção 1.5, onde apresentaremos a Regra de Born para calcular probabilidades e o postulado da projeção que descreve o "colapso" do estado pós-medição, além de discutir valores esperados e a compatibilidade de observáveis ligada às relações de comutação. A dinâmica dos sistemas quânticos, ou seja, como seus estados evoluem ao longo do tempo, será abordada na Seção 1.6 através da equação fundamental de Schrödinger e do papel central do operador Hamiltoniano, enfatizando a unitaridade da evolução. Finalmente, estenderemos nosso formalismo para descrever sistemas compostos por múltiplas partes (Seção 1.7), introduzindo o conceito de produto tensorial e desvendando o fenômeno profundamente não-clássico do emaranhamento, que estabelece correlações instantâneas e não-locais entre sistemas distantes. O capítulo culminará com uma síntese (Seção 1.8) que reúne esses postulados fundamentais, solidificando a base necessária antes de aplicarmos esses princípios ao processamento de informação nos capítulos seguintes.
@@ -122,3 +122,103 @@ A notação de Dirac simplifica a representação de vetores e a mudança de bas
     onde $U_{ji} = \langle f_j | e_i \rangle$ são os elementos de uma matriz de transformação $U$. Pode-se mostrar que $U$ é uma *matriz unitária*, satisfazendo $U^\dagger U = U U^\dagger = I$, onde $(U^\dagger)_{ij} = U_{ji}^* = (\langle f_j | e_i \rangle)^* = \langle e_i | f_j \rangle$. A transformação unitária preserva o produto interno (e, portanto, normas e ortogonalidade) entre os vetores.
 
 Esta estrutura matemática robusta dos Espaços de Hilbert, juntamente com a conveniência da notação de Dirac, fornece o cenário necessário para formular os postulados e desenvolver a teoria da mecânica quântica, que será abordada nas próximas seções.
+
+**1.3 Estados Quânticos e o Princípio da Superposição**
+
+Após estabelecer a arena matemática – o Espaço de Hilbert – na seção anterior, agora introduzimos os primeiros postulados fundamentais da mecânica quântica, que definem como o estado de um sistema é representado e como múltiplos estados possíveis podem ser combinados.
+
+**O Estado de um Sistema Físico**
+
+O primeiro postulado da mecânica quântica estabelece como descrever o estado de qualquer sistema físico isolado:
+
+*   **Postulado 1 (Estado do Sistema):** Associado a qualquer sistema físico isolado está um Espaço de Hilbert complexo $\mathcal{H}$, conhecido como o *espaço de estados* do sistema. O estado do sistema em um instante de tempo $t$ é completamente definido por um *vetor de estado* $|\psi(t)\rangle$, que é um vetor normalizado pertencente a $\mathcal{H}$.
+
+Isso significa que toda a informação que pode ser conhecida sobre o sistema naquele instante está contida no vetor $|\psi(t)\rangle$. A exigência de normalização é crucial e significa que o vetor de estado deve satisfazer:
+\[ \langle\psi(t)|\psi(t)\rangle = \| |\psi(t)\rangle \|^2 = 1 \quad \text{(Equação 1.25)} \]
+Esta condição está intimamente ligada à interpretação probabilística da teoria, como veremos na Seção 1.5. Qualquer vetor em $\mathcal{H}$ que satisfaça a Eq. (1.25) representa um estado físico possível do sistema.
+
+Por exemplo, o sistema mais simples de interesse na computação quântica é o *qubit*, um sistema quântico de dois níveis. Seu espaço de estados é um Espaço de Hilbert bidimensional, $\mathcal{H} \cong \mathbb{C}^2$. Uma base ortonormal padrão para este espaço, chamada de *base computacional*, é denotada por $\{|0\rangle, |1\rangle\}$, onde:
+\[ |0\rangle \doteq \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle \doteq \begin{pmatrix} 0 \\ 1 \end{pmatrix} \]
+Estes dois vetores são normalizados ($\langle 0|0\rangle = 1, \langle 1|1\rangle = 1$) e ortogonais ($\langle 0|1\rangle = 0$). Eles representam dois estados físicos distintos e classicamente análogos do sistema (por exemplo, spin para cima e spin para baixo, ou os níveis de energia fundamental e primeiro excitado de um átomo).
+
+**O Princípio da Superposição**
+
+O segundo postulado introduz uma característica fundamentalmente não-clássica da mecânica quântica: o princípio da superposição.
+
+*   **Postulado 2 (Superposição):** Se $|\psi_1\rangle$ e $|\psi_2\rangle$ são dois vetores de estado possíveis para um sistema (i.e., vetores normalizados em $\mathcal{H}$), então qualquer combinação linear normalizada
+    \[ |\psi\rangle = \alpha|\psi_1\rangle + \beta|\psi_2\rangle \]
+    (onde $\alpha, \beta \in \mathbb{C}$ não são ambos nulos e satisfazem a condição de normalização) também representa um estado físico possível do sistema.
+
+Este princípio afirma que, se um sistema pode existir no estado $|\psi_1\rangle$ e também pode existir no estado $|\psi_2\rangle$, então ele também pode existir em um estado que é uma "mistura" ou "superposição" desses dois estados. Isso contrasta fortemente com a intuição clássica, onde um sistema (como um bit) está ou no estado 0 ou no estado 1, mas nunca em uma combinação de ambos simultaneamente.
+
+Para que o estado $|\psi\rangle = \alpha|\psi_1\rangle + \beta|\psi_2\rangle$ seja um vetor de estado válido, ele deve ser normalizado, $\langle\psi|\psi\rangle = 1$. Vamos calcular o produto interno:
+\[ \langle\psi|\psi\rangle = \langle \alpha\psi_1 + \beta\psi_2 | \alpha\psi_1 + \beta\psi_2 \rangle \]
+Usando a antilinearidade no primeiro argumento e a linearidade no segundo:
+\[ \langle\psi|\psi\rangle = \alpha^*\langle\psi_1| (\alpha|\psi_1\rangle + \beta|\psi_2\rangle) + \beta^*\langle\psi_2| (\alpha|\psi_1\rangle + \beta|\psi_2\rangle) \]
+\[ \langle\psi|\psi\rangle = \alpha^*\alpha\langle\psi_1|\psi_1\rangle + \alpha^*\beta\langle\psi_1|\psi_2\rangle + \beta^*\alpha\langle\psi_2|\psi_1\rangle + \beta^*\beta\langle\psi_2|\psi_2\rangle \]
+\[ \langle\psi|\psi\rangle = |\alpha|^2 \|\psi_1\|^2 + |\beta|^2 \|\psi_2\|^2 + \alpha^*\beta\langle\psi_1|\psi_2\rangle + \beta^*\alpha\langle\psi_2|\psi_1\rangle \]
+Como $|\psi_1\rangle$ e $|\psi_2\rangle$ são estados normalizados, $\|\psi_1\|^2 = \|\psi_2\|^2 = 1$. Usando $\langle\psi_2|\psi_1\rangle = \langle\psi_1|\psi_2\rangle^*$, a expressão se torna:
+\[ \langle\psi|\psi\rangle = |\alpha|^2 + |\beta|^2 + \alpha^*\beta\langle\psi_1|\psi_2\rangle + (\alpha^*\beta\langle\psi_1|\psi_2\rangle)^* \]
+\[ \langle\psi|\psi\rangle = |\alpha|^2 + |\beta|^2 + 2 \text{Re}(\alpha^*\beta\langle\psi_1|\psi_2\rangle) \quad \text{(Equação 1.26)} \]
+A condição de normalização é que esta expressão seja igual a 1.
+
+Um caso particularmente importante ocorre quando $|\psi_1\rangle$ e $|\psi_2\rangle$ são ortonormais, como os vetores de base $|0\rangle$ e $|1\rangle$ do qubit. Nesse caso, $\langle\psi_1|\psi_2\rangle = 0$, e a condição de normalização (Eq. 1.26) simplifica para:
+\[ |\alpha|^2 + |\beta|^2 = 1 \quad (\text{para } \langle\psi_1|\psi_2\rangle = 0) \quad \text{(Equação 1.27)} \]
+Portanto, para um qubit, qualquer vetor da forma $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ com $\alpha, \beta \in \mathbb{C}$ satisfazendo $|\alpha|^2 + |\beta|^2 = 1$ representa um estado físico válido. Os números complexos $\alpha$ e $\beta$ são chamados de *amplitudes de probabilidade*.
+
+Exemplos de estados de superposição de um qubit incluem:
+\[ |+\rangle = \frac{1}{\sqrt{2}}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle \]
+\[ |-\rangle = \frac{1}{\sqrt{2}}|0\rangle - \frac{1}{\sqrt{2}}|1\rangle \]
+\[ |+i\rangle = \frac{1}{\sqrt{2}}|0\rangle + \frac{i}{\sqrt{2}}|1\rangle \]
+\[ |-i\rangle = \frac{1}{\sqrt{2}}|0\rangle - \frac{i}{\sqrt{2}}|1\rangle \]
+Todos estes satisfazem a condição $|\alpha|^2 + |\beta|^2 = (1/\sqrt{2})^2 + (\pm 1/\sqrt{2})^2 = 1/2 + 1/2 = 1$ ou $(1/\sqrt{2})^2 + (\pm i/\sqrt{2})^2 = 1/2 + |i|^2/2 = 1/2 + 1/2 = 1$.
+
+De forma mais geral, se $\{|e_i\rangle\}$ é uma base ortonormal para o Espaço de Hilbert $\mathcal{H}$ (que pode ser de dimensão finita ou infinita), então qualquer estado $|\psi\rangle \in \mathcal{H}$ pode ser escrito como uma superposição dos vetores da base:
+\[ |\psi\rangle = \sum_i c_i |e_i\rangle \quad \text{onde } c_i = \langle e_i | \psi \rangle \]
+A condição de normalização $\langle\psi|\psi\rangle = 1$ implica:
+\[ \langle\psi|\psi\rangle = \left( \sum_j c_j^* \langle e_j | \right) \left( \sum_k c_k |e_k\rangle \right) = \sum_{j,k} c_j^* c_k \langle e_j | e_k \rangle = \sum_{j,k} c_j^* c_k \delta_{jk} \]
+\[ \sum_{i} |c_i|^2 = 1 \quad \text{(Equação 1.28)} \]
+A soma dos quadrados dos módulos das amplitudes de probabilidade deve ser igual a 1.
+
+**Interpretação Física da Superposição: Interferência**
+
+O princípio da superposição não implica que o sistema esteja "um pouco em cada estado" ou que esteja classicamente em um estado mas não sabemos qual. Ele descreve uma realidade genuinamente nova. Uma das consequências mais marcantes e diretas da superposição é o fenômeno da *interferência quântica*.
+
+Considere novamente a superposição $|\psi\rangle = \alpha|\psi_1\rangle + \beta|\psi_2\rangle$. Se fôssemos medir uma propriedade física (representada por um operador, como veremos na Seção 1.4) cujos valores possíveis estão associados aos estados $|\psi_1\rangle$ e $|\psi_2\rangle$, o estado de superposição $|\psi\rangle$ implica que *ambos* os resultados são potenciais desfechos da medição, com probabilidades relacionadas a $|\alpha|^2$ e $|\beta|^2$ (ver Seção 1.5).
+
+A interferência surge quando consideramos a probabilidade de encontrar o sistema em um *outro* estado $|\phi\rangle$. A amplitude de probabilidade para encontrar o sistema em $|\phi\rangle$ é $\langle\phi|\psi\rangle$. A probabilidade correspondente é $P(\phi) = |\langle\phi|\psi\rangle|^2$. Substituindo a superposição:
+\[ P(\phi) = |\langle\phi| (\alpha|\psi_1\rangle + \beta|\psi_2\rangle) |^2 = |\alpha\langle\phi|\psi_1\rangle + \beta\langle\phi|\psi_2\rangle|^2 \]
+Expandindo o módulo quadrado de um número complexo ($|z|^2 = z^*z$):
+\[ P(\phi) = (\alpha^*\langle\psi_1|\phi\rangle + \beta^*\langle\psi_2|\phi\rangle) (\alpha\langle\phi|\psi_1\rangle + \beta\langle\phi|\psi_2\rangle) \]
+\[ P(\phi) = |\alpha|^2 |\langle\phi|\psi_1\rangle|^2 + |\beta|^2 |\langle\phi|\psi_2\rangle|^2 + \alpha^*\beta \langle\psi_1|\phi\rangle \langle\phi|\psi_2\rangle + \beta^*\alpha \langle\psi_2|\phi\rangle \langle\phi|\psi_1\rangle \]
+\[ P(\phi) = |\alpha|^2 P(\phi|\psi_1) + |\beta|^2 P(\phi|\psi_2) + 2 \text{Re}(\alpha^*\beta \langle\psi_1|\phi\rangle \langle\phi|\psi_2\rangle) \quad \text{(Equação 1.29)} \]
+Aqui, $P(\phi|\psi_1) = |\langle\phi|\psi_1\rangle|^2$ é a probabilidade de transição de $|\psi_1\rangle$ para $|\phi\rangle$, e similarmente para $P(\phi|\psi_2)$. O resultado crucial é o terceiro termo: o *termo de interferência*. Ele depende das amplitudes $\alpha, \beta$ e dos produtos internos envolvendo os três estados. Este termo pode ser positivo (interferência construtiva) ou negativo (interferência destrutiva), fazendo com que a probabilidade total $P(\phi)$ seja maior ou menor do que a soma ponderada das probabilidades individuais ($|\alpha|^2 P(\phi|\psi_1) + |\beta|^2 P(\phi|\psi_2)$), que seria o resultado esperado se o sistema estivesse classicamente em $|\psi_1\rangle$ ou $|\psi_2\rangle$ com probabilidades $|\alpha|^2$ e $|\beta|^2$.
+
+O exemplo clássico é o experimento da fenda dupla: uma partícula (elétron, fóton) pode passar pela fenda 1 (estado $|\psi_1\rangle$) ou pela fenda 2 (estado $|\psi_2\rangle$). Se ambas as fendas estão abertas, o estado da partícula é uma superposição $|\psi\rangle = \alpha|\psi_1\rangle + \beta|\psi_2\rangle$. A probabilidade de detectar a partícula em uma posição $x$ na tela de detecção (estado $|\phi\rangle \approx |x\rangle$) exibe um padrão de franjas de interferência, resultado direto do termo de interferência na Eq. (1.29).
+
+**Normalização de Estados e Fases: Global vs. Relativa**
+
+Já enfatizamos que os vetores de estado devem ser normalizados ($\langle\psi|\psi\rangle=1$). No entanto, a representação de um estado físico por um vetor de estado não é única. Considere um estado normalizado $|\psi\rangle$ e outro vetor $|\psi'\rangle = e^{i\gamma}|\psi\rangle$, onde $\gamma$ é um número real (uma fase). O vetor $|\psi'\rangle$ também é normalizado:
+\[ \langle\psi'|\psi'\rangle = \langle e^{i\gamma}\psi | e^{i\gamma}\psi \rangle = (e^{i\gamma})^* (e^{i\gamma}) \langle\psi|\psi\rangle = e^{-i\gamma} e^{i\gamma} (1) = 1 \]
+Além disso, como veremos nas próximas seções, todas as previsões físicas (probabilidades de resultados de medições, valores esperados de observáveis) calculadas a partir de $|\psi'\rangle$ são idênticas às calculadas a partir de $|\psi\rangle$. Por exemplo, a probabilidade de encontrar o sistema no estado $|\phi\rangle$ (supondo $\langle\phi|\phi\rangle=1$) é:
+\[ |\langle\phi|\psi'\rangle|^2 = |\langle\phi| e^{i\gamma}|\psi\rangle|^2 = |e^{i\gamma}\langle\phi|\psi\rangle|^2 = |e^{i\gamma}|^2 |\langle\phi|\psi\rangle|^2 = 1 \cdot |\langle\phi|\psi\rangle|^2 \]
+As probabilidades são as mesmas. Isso significa que $|\psi\rangle$ e $e^{i\gamma}|\psi\rangle$ representam exatamente o mesmo estado físico. Uma *fase global* multiplicando todo o vetor de estado não tem significado físico observável. Frequentemente se diz que os estados físicos correspondem a *raios* no Espaço de Hilbert (conjuntos de vetores que diferem apenas por um fator de fase global).
+
+No entanto, a situação é drasticamente diferente para *fases relativas* em uma superposição. Considere os estados:
+\[ |\psi\rangle = \alpha|\psi_1\rangle + \beta|\psi_2\rangle \]
+\[ |\psi''\rangle = \alpha|\psi_1\rangle + \beta e^{i\delta}|\psi_2\rangle \]
+onde $|\psi_1\rangle, |\psi_2\rangle$ são ortonormais, $|\alpha|^2 + |\beta|^2 = 1$, e $\delta$ é uma fase real. Se $\delta$ não for um múltiplo de $2\pi$, os estados $|\psi\rangle$ e $|\psi''\rangle$ são fisicamente distintos. Eles são ambos normalizados, mas não são iguais (a menos que $\alpha=0$ ou $\beta=0$). A diferença está na fase relativa entre as componentes $|\psi_1\rangle$ e $|\psi_2\rangle$.
+
+Para ver que são distintos, podemos calcular seu produto interno:
+\[ \langle\psi|\psi''\rangle = (\alpha^*\langle\psi_1| + \beta^*\langle\psi_2|) (\alpha|\psi_1\rangle + \beta e^{i\delta}|\psi_2\rangle) \]
+\[ \langle\psi|\psi''\rangle = |\alpha|^2\langle\psi_1|\psi_1\rangle + \alpha^*\beta e^{i\delta}\langle\psi_1|\psi_2\rangle + \beta^*\alpha\langle\psi_2|\psi_1\rangle + \beta^*\beta e^{i\delta}\langle\psi_2|\psi_2\rangle \]
+Usando $\langle\psi_1|\psi_1\rangle = \langle\psi_2|\psi_2\rangle = 1$ e $\langle\psi_1|\psi_2\rangle = \langle\psi_2|\psi_1\rangle = 0$:
+\[ \langle\psi|\psi''\rangle = |\alpha|^2 + |\beta|^2 e^{i\delta} \quad \text{(Equação 1.30)} \]
+A menos que $\delta=2\pi n$ (caso em que $e^{i\delta}=1$ e $\langle\psi|\psi''\rangle=|\alpha|^2+|\beta|^2=1$, significando $|\psi\rangle=|\psi''\rangle$) ou que $\alpha$ ou $\beta$ seja zero, o módulo deste produto interno será menor que 1:
+\[ |\langle\psi|\psi''\rangle|^2 = | |\alpha|^2 + |\beta|^2 \cos\delta + i |\beta|^2 \sin\delta |^2 = (|\alpha|^2 + |\beta|^2 \cos\delta)^2 + (|\beta|^2 \sin\delta)^2 \]
+\[ |\langle\psi|\psi''\rangle|^2 = |\alpha|^4 + 2|\alpha|^2|\beta|^2\cos\delta + |\beta|^4\cos^2\delta + |\beta|^4\sin^2\delta = |\alpha|^4 + |\beta|^4 + 2|\alpha|^2|\beta|^2\cos\delta \]
+Esta expressão é igual a $(|\alpha|^2+|\beta|^2)^2 = 1$ somente se $\cos\delta = 1$. Caso contrário, é menor que 1, indicando que os vetores são diferentes (e não apenas por uma fase global).
+
+A fase relativa $\delta$ tem consequências físicas observáveis, pois afeta diretamente o termo de interferência na Eq. (1.29) e, consequentemente, as probabilidades de medição em bases que não sejam $\{|\psi_1\rangle, |\psi_2\rangle\}$. Por exemplo, os estados $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ e $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) = \frac{1}{\sqrt{2}}(|0\rangle + e^{i\pi}|1\rangle)$ diferem por uma fase relativa de $\delta = \pi$ e são estados físicos ortogonais e completamente distintos.
+
+Em resumo, o estado de um sistema quântico é um vetor normalizado no Espaço de Hilbert, definido apenas até uma fase global. O princípio da superposição permite combinações lineares de estados, e as fases relativas nessas combinações são fisicamente significativas e responsáveis pelo fenômeno da interferência.
