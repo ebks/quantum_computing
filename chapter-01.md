@@ -73,7 +73,7 @@ O produto interno permite definir conceitos geométricos fundamentais:
 **Bases Ortonormais (BON)**
 
 Em um espaço de produto interno $\mathcal{V}$ de dimensão finita ou infinita separável, é frequentemente útil trabalhar com uma *base ortonormal* (BON). Uma BON é um conjunto de vetores $\{ |e_i\rangle \}_{i \in I}$ (onde $I$ é um conjunto de índices, finito ou contável) que satisfaz:
-1.  **Ortonormalidade:** $\langle e_i | e_j \rangle = \delta_{ij}$   (Equação 1.16)
+1.  **Ortonormalidade:** $\langle e_i | e_j \rangle = \delta_{ij} = \begin{cases} 1 & \text{se } i=j \\ 0 & \text{se } i \neq j \end{cases}$   (Equação 1.16)
 2.  **Completude (Propriedade de Base):** Qualquer $|\psi\rangle \in \mathcal{V}$ pode ser expresso unicamente como $|\psi\rangle = \sum_{i \in I} c_i |e_i\rangle$   (Equação 1.17)
 
 Os coeficientes da expansão (componentes) são dados por:
